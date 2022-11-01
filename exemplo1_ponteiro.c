@@ -7,10 +7,10 @@ void troca(int *x,int *y){
 }
 int main(){
     int a, b;
-    printf("Informe dois números: ");
+    printf("Informe dois nÃºmeros: ");
     scanf("%d %d", &a, &b);
     printf("Antes: %d - %d\n",a,b);
     //troca
     troca(&a, &b);
-    printf("Após: %d - %d\n",a,b);
+    printf("ApÃ³s: %d - %d\n",a,b);
 }
