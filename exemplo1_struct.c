@@ -25,9 +25,9 @@ int main(){
 		fflush(stdin);
 		printf("Informe o nome do produto: ");
 		fgets(prod[count].nome,30,stdin);
-		printf("Informe o preço de compra do produto: ");
+		printf("Informe o preÃ§o de compra do produto: ");
 		scanf("%f",&prod[count].pCompra);	
-		printf("Informe o preço de venda do produto: ");
+		printf("Informe o preÃ§o de venda do produto: ");
 		scanf("%f",&prod[count].pVenda);
 		printf("Informe a quantidade de produtos: ");
 		scanf("%f",&prod[count].pCompra);
