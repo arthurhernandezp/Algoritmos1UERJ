@@ -20,7 +20,7 @@ int main(){
 	for(i ==0 ; i < 15; i++){
 		lerNota(&nota1,&nota2);
 		calcular_media(nota1,nota2,&media);
-		printf (" Media do %dº Aluno é: %.2f",i+1,media);
+		printf (" Media do %dÂº Aluno Ã©: %.2f",i+1,media);
 	}
 	
 	
