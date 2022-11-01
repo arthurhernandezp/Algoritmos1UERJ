@@ -1,3 +1,5 @@
+/*Serie de fibonnaci sem recursividade*/
+
 #include <stdio.h>
 
 int main(){
