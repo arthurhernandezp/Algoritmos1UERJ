@@ -1,3 +1,6 @@
+/*
+Soma de 1 ate n(O(N))
+*/
 #include <stdio.h>
 #include <stdlib.h>
 
