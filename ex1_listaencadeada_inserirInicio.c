@@ -1,3 +1,10 @@
+/*
+Faça uma função que permita buscar um elemento em uma
+lista encadeada, para que possa ser utilizada nas funções de
+inserção ou remoção de um elemento, quando necessário. A
+função deve retornar o endereço do elemento encontrado.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -5,6 +12,17 @@ typedef struct no{
     int info;
     struct no *prox;
 }no;
+
+no* buscaElemento(no *n,int valor){
+    no* aux;
+    aux = n;
+    while(aux != NULL){
+        if(valor == aux->info){
+            return aux;
+        }
+        aux = aux->prox;
+    }
+}
 
 void inicializarLista(no **n){
     *n = NULL;
@@ -62,7 +80,7 @@ void removerElemento(no** n, int valor){
     no *ant, *aux;
     aux = *n;
     ant = NULL;
-    if(!listaVazia(n)){
+    if(!listaVazia(*n)){
         //procurar pelo nó a remover
         while(aux != NULL && aux->info != valor){
             ant = aux;
@@ -90,6 +108,7 @@ void removerElemento(no** n, int valor){
 
 int main()
 {
+    int *end;
     no *inicioL;
     inicializarLista(&inicioL);
     inserirInicio(&inicioL,2);
@@ -107,7 +126,8 @@ int main()
     pecorrer(inicioL);
     removerElemento(&inicioL,4);
     pecorrer(inicioL);
-
+    
+    printf("\nElemento 5: no endereço %p\n",buscaElemento(inicioL,444));
     printf("\nInfo inicio: %d",inicioL->info);
     
     return 0;
