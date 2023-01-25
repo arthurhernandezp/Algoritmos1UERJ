@@ -129,9 +129,7 @@ void inserirFinal(no **n, int valor){
 
 int main() {
     no *inicioE;
-    printf("Antes: %d\n",listaVazia(inicioE));
     constroi(&inicioE);
-    printf("Depois: %d\n",listaVazia(inicioE));
     inserirEsquerda(&inicioE,76);
     inserirEsquerda(&inicioE,16);
     inserirEsquerda(&inicioE,16);
