@@ -49,13 +49,12 @@ void removerTodosIguais(no **n, int valor){
     if(!listaVazia(*n)){
         //procurar pelo nó a remover
         while(aux != NULL){
-            if(ant == NULL && aux->valor == valor){//É o primeiro elemento
-                *n = aux->prox;
-                free(aux);
-                aux = *n;
-            }
-            else{//Não é o primeiro elemento
-                if(aux->valor == valor) {
+            if(aux->valor == valor) {
+                if(ant == NULL){
+                    *n = aux->prox;
+                    free(aux);
+                    aux = *n;
+                }else{
                     ant->prox = aux->prox;
                     free(aux);
                     aux = ant;
@@ -123,7 +122,9 @@ void inserirFinal(no **n, int valor){
 
 int main() {
     no *inicioE;
+    printf("Antes: %d\n",listaVazia(inicioE));
     constroi(&inicioE);
+    printf("Depois: %d\n",listaVazia(inicioE));
     inserirEsquerda(&inicioE,76);
     inserirEsquerda(&inicioE,16);
     inserirEsquerda(&inicioE,16);
