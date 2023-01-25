@@ -49,8 +49,7 @@ void removerTodosIguais(no **n, int valor){
     if(!listaVazia(*n)){
         //procurar pelo nó a remover
         while(aux != NULL){
-    
-            if(ant == NULL){//É o primeiro elemento
+            if(ant == NULL && aux->valor == valor){//É o primeiro elemento
                 *n = aux->prox;
                 free(aux);
                 aux = *n;
@@ -62,11 +61,9 @@ void removerTodosIguais(no **n, int valor){
                     aux = ant;
                 }
             }
-            
             ant = aux;
             aux = aux->prox;
         }
-        
     }
     else{
         printf("\nLista vazia!!!!");
