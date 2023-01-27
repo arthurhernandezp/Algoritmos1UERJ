@@ -1,117 +1,141 @@
 // Online C compiler to run C program online
 #include <stdio.h>
 #include <stdlib.h>
+
 typedef struct no{
-    int info;
+    int valor;
     struct no *prox;
-    struct no *antes;
+    struct no *ant;
 }no;
 
-void inicializa_lista(no **E, no **D){
+void constroi(no **E, no **D){
     *E = NULL;
     *D = NULL;
 }
 
-int listaVazia(no* E, no* D){
-    if(E == NULL && D == NULL) return 1;
-    return 0;
+int listaVazia(no *E, no *D){
+    return E == NULL && D == NULL;
 }
 
-void inserirDir(int valor, no **E,no **D){
-    no* aux;
-    aux = (no*) malloc(sizeof(no));
-    if(aux != NULL){
-        aux->info = valor;
-        aux->prox = NULL;
-        aux->antes = NULL;
-        if(listaVazia(*E,*D)){//primeiro elemento
-            *D = aux;
-            *E = aux;
-        }else{//inserir pela direita
-            aux->antes = *D;
-            (*D)->prox = aux;
-            *D = aux;
-        }
+int buscaElemento(no *E,int valor){
+    no *aux;
+    aux = E;
+    while(aux != NULL & aux->valor != valor){
+        aux = aux->prox;
+    }
+    if(aux == NULL) return -1;
+    else if(aux->valor == valor) return 1;
+}
+
+void inserirInicio(no **E, no **D, int valor){
+    no *aux;
+    aux = (no*) malloc(sizeof(no*));
+    aux->valor = valor;
+    aux->prox = NULL;
+    aux->ant = NULL;
+    if(listaVazia(*E,*D)){
+        *E = aux;
+        *D = aux;
     }else{
-        printf("\nErro!");
+        aux->prox = (*E);
+        (*E)->ant = aux;
+        (*E) = aux;
     }
 }
 
-void pecorrerEsq(no* E){
-        no* aux;
-        aux = E;
-        while(aux != NULL){
-            printf("%d ",aux->info);
-            aux = aux->prox;
-        }
-        printf("\n");
+void inserirFinal(no **E, no **D, int valor){
+    no *aux;
+    aux = (no*) malloc(sizeof(no*));
+    aux->valor = valor;
+    aux->ant = NULL;
+    aux->prox = NULL;
+    if(listaVazia(*E,*D)){
+        *E = aux;
+        *D = aux;
+    }else{
+        aux->ant = *D;
+        (*D)->prox = aux;
+        (*D) = aux;
+    }
 }
 
-void pecorrerDir(no* D){
-    no* aux;
-    aux = D;
-    
+void pecorrer(no *E){
+    no *aux;
+    aux = E;
     while(aux != NULL){
-        printf("%d ",aux->info);
-        aux = aux->antes;
+        printf("%d ",aux->valor);
+        aux = aux->prox;
     }
     printf("\n");
 }
-void remover(int valor, no **E, no **D){
+
+no* buscaLDE(no *n,int valor){
     no* aux;
-    if(!listaVazia(*E,*D)){
-        aux = *E;
-        //BUSCA ELEMENTO
-        while(aux != NULL && aux->info != valor){
-            aux = aux->prox;
+    aux = n;
+    while(aux != NULL){
+        if(valor == aux->valor){
+            return aux;
         }
-        if(aux == NULL){
-            printf("\nO elemento nao foi encontrado!!");
-        }else{
-            if(*E == *D){//Unico elemento
+        aux = aux->prox;
+    }
+    return NULL;
+}
+    
+void removerElemento (no **E, no**D,int valor) {
+    no *aux;
+    if (listaVazia(*E,*D))
+        printf("Lista vazia!");
+    else{
+        aux = buscaLDE(*E,valor);
+        if (aux == NULL)
+            printf("Elemento não está na lista!");
+        else{
+            if (*E == *D){//verifica se a lista tem só 1 elemento
                 *E = NULL;
-                *D = NULL;
-            }else{
-                if(aux->antes == NULL){//Inicio E
-                    *E = aux->prox;
-                    (*E)->antes = NULL;
-                }
-                else{
-                    if(aux->prox == NULL){
-                        *D = aux->antes;
-                        (*D)->prox = NULL;
-                    }
-                    else{//elemento intermediario
-                        no* anterior = aux->antes;
-                        no* posterior = aux->prox;
-                        anterior->prox = posterior;
-                        posterior->antes = anterior;
-                    }
-                }
+                *D=NULL;
             }
-            free(aux);
+            else if (aux->ant == NULL){//verifica se é o primeiro elemento a ser removido
+                *E = aux->prox;
+                (*E)->ant=NULL;
+            }
+            else{
+                if (aux->prox == NULL) {//verifica se é o ultimo elemento a ser removido
+                    *D = aux->ant;
+                    (*D)->prox = NULL;
+                }
+                else {
+                    aux->ant->prox = aux->prox;
+                    aux->prox->ant = aux->ant;
+                }
+                free(aux);
+            }
         }
-    }else{
-        printf("\nLista Vazia!!!!");
     }
 }
+
+
 int main() {
     no *inicioE;
     no *inicioD;
-    inicializa_lista(&inicioE,&inicioD);
-    inserirDir(5,&inicioE,&inicioD);
-    inserirDir(15,&inicioE,&inicioD);
-    inserirDir(4,&inicioE,&inicioD);
-    pecorrerEsq(inicioE);
-    remover(4,&inicioE,&inicioD);
-    remover(15,&inicioE,&inicioD);
-    remover(5,&inicioE,&inicioD);
-    inserirDir(6,&inicioE,&inicioD);
-    inserirDir(10,&inicioE,&inicioD);
-    inserirDir(1,&inicioE,&inicioD);
-    printf("\n");
-    pecorrerDir(inicioD);
-    remover(10,&inicioE,&inicioD);
-    pecorrerDir(inicioD);
+    constroi(&inicioE,&inicioD);
+    pecorrer(inicioE);
+    inserirInicio(&inicioE,&inicioD,5);
+    inserirInicio(&inicioE,&inicioD,10);
+    inserirInicio(&inicioE,&inicioD,3);
+    inserirFinal(&inicioE,&inicioD,20);
+    inserirFinal(&inicioE,&inicioD,4);
+    inserirFinal(&inicioE,&inicioD,13);
+    inserirInicio(&inicioE,&inicioD,8);
+    inserirInicio(&inicioE,&inicioD,7);
+    pecorrer(inicioE);
+    removerElemento(&inicioE,&inicioD,8);
+    removerElemento(&inicioE,&inicioD,7);
+    removerElemento(&inicioE,&inicioD,13);
+    removerElemento(&inicioE,&inicioD,4);
+    removerElemento(&inicioE,&inicioD,5);
+    removerElemento(&inicioE,&inicioD,10);
+    removerElemento(&inicioE,&inicioD,3);
+    removerElemento(&inicioE,&inicioD,20);
+    pecorrer(inicioE);
     return 0;
 }
